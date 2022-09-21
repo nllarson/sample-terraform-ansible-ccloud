@@ -1,0 +1,32 @@
+all:
+    vars: 
+        ansible_connection: ssh
+        ansible_user: ${linux_user}
+        ansible_become: true
+        ansible_ssh_private_key_file: ${private_key_file}
+        validate_hosts: true
+        sasl_protocol: plain
+
+    kafka_connect_custom_properties:
+      bootstrap.servers: ${confluent_cloud_bootstrap_server}
+      ssl.endpoint.identification.algorithm: https
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="{{cc_api_key}}" password="{{cc_api_secret}}";
+      security.protocol: SASL_SSL
+
+      consumer.ssl.endpoint.identification.algorithm: https
+      consumer.sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="{{cc_api_key}}" password="{{cc_api_secret}}";
+      consumer.security.protocol: SASL_SSL
+
+      producer.ssl.endpoint.identification.algorithm: https
+      producer.sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="{{cc_api_key}}" password="{{cc_api_secret}}";
+      producer.security.protocol: SASL_SSL      
+      
+
+kafka_connect:
+  hosts:
+    %{ for dns in connect_nodes ~}
+    ${dns}
+    %{ endfor ~}
