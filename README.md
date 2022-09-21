@@ -18,4 +18,5 @@ Then:
 * `terraform plan --var-file ${environment}.tfvars`
 * Verify plan looks right
 * `terraform apply --var-file ${enviornment}.tfvars`
-* `terraform output -json`
+
+From there an inventory file will be created in the `ansible` directory named similar to `{ENV}-inventory.yml`.  This file will keep up to date as you add / remove nodes from the connect cluster.  If you are wanting to keep any changes that you make to the inventory file, the changes should be made in `ansible/templates/hosts.tmpl`
