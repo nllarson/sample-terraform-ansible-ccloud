@@ -1,5 +1,8 @@
-# replicator-automation demo project
+# sample-terraform-ansible-ccloud demo project
 
+Create a self managed Kafka Connect cluster and attach it to a Confluent Cloud cluster for the purpose of starting a replicator connector to move data to the cloud cluster.  
+
+To help in automation, the ansible inventory file is being created through the Terraform tempaltefile function. So as the infrastructure for the connect cluster grows / shrinks, the inventory file can be kept up-to-date.  
 
 ### Requirements
 * Terraform
